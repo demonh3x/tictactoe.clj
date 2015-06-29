@@ -93,6 +93,7 @@
                        (winner [:empty :empty :o
                                 :empty :empty :o
                                 :empty :empty :o]))))
+
 (describe "full?"
           (it "is false when there is one empty space"
               (should= false
@@ -111,4 +112,5 @@
                        (full? [:o :x :o
                                :x :x :o
                                :x :o :x]))))
+
 (run-specs)
