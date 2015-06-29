@@ -3,26 +3,26 @@
             [tictactoe.core :refer :all]))
 
 (describe "next-mark"
-          (it "in a board with no marks, x is the next"
+          (it "is x when the board has no marks"
                (should= :x
                         (next-mark [:empty :empty :empty
                                     :empty :empty :empty
                                     :empty :empty :empty])))
 
-          (it "in a board with one x mark, o is the next"
+          (it "is o when the board has one x mark"
                (should= :o
                         (next-mark [:empty :x     :empty
                                     :empty :empty :empty
                                     :empty :empty :empty])))
 
-          (it "in a board with one x mark and one o mark, x is the next"
+          (it "is x when the board has one x mark and one o mark"
                (should= :x
                         (next-mark [:x     :o     :empty
                                     :empty :empty :empty
                                     :empty :empty :empty]))))
 
 (describe "do-turn"
-          (it "in a board with no marks, places the x mark at chosen space"
+          (it "places the x mark at first space in a board with no marks"
               (should= [:x     :empty :empty
                         :empty :empty :empty
                         :empty :empty :empty]
@@ -31,7 +31,7 @@
                                  :empty :empty :empty
                                  :empty :empty :empty])))
 
-          (it "in a board with one move from x, places the o mark at chosen space"
+          (it "places the o mark at second space in a board with a x mark in the first space"
               (should= [:x     :o     :empty
                         :empty :empty :empty
                         :empty :empty :empty]
