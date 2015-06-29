@@ -32,3 +32,6 @@
         winning-lines (filter same-mark? lines)
         winner (ffirst winning-lines)]
     (or winner :none)))
+
+(defn full? [board]
+  (not-any? #(= :empty %) board))
