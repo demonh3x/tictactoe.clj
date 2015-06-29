@@ -1,4 +1,4 @@
-(ns tictactoe.clj.core)
+(ns tictactoe.core)
 
 (defn- count-marks-in [board mark-type]
   (count (filter #(= mark-type %) board)))
