@@ -24,7 +24,7 @@
 
 (defn same-mark? [marks]
   (every? #(and (not= :empty %)
-                (= (first marks) %) )
+                (= (first marks) %))
           marks))
 
 (defn winner [board]
