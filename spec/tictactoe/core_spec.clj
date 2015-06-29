@@ -22,7 +22,7 @@
                                     :empty :empty :empty]))))
 
 (describe "do-turn"
-          (it "in the initial board, places the mark at player x's chosen space"
+          (it "in a board with no marks, places the x mark at chosen space"
               (should= [:x     :empty :empty
                         :empty :empty :empty
                         :empty :empty :empty]
@@ -31,16 +31,7 @@
                                  :empty :empty :empty
                                  :empty :empty :empty])))
 
-          (it "in the initial board, places the mark at player x's chosen space"
-              (should= [:empty :x     :empty
-                        :empty :empty :empty
-                        :empty :empty :empty]
-                       (do-turn (fn [] 1)
-                                [:empty :empty :empty
-                                 :empty :empty :empty
-                                 :empty :empty :empty])))
-
-          (it "in a board with one move from x, places the mark at player o's chosen space"
+          (it "in a board with one move from x, places the o mark at chosen space"
               (should= [:x     :o     :empty
                         :empty :empty :empty
                         :empty :empty :empty]
