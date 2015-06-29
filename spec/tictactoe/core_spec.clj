@@ -4,22 +4,22 @@
 
 (describe "next-mark"
           (it "is x when the board has no marks"
-               (should= :x
-                        (next-mark [:empty :empty :empty
-                                    :empty :empty :empty
-                                    :empty :empty :empty])))
+              (should= :x
+                       (next-mark [:empty :empty :empty
+                                   :empty :empty :empty
+                                   :empty :empty :empty])))
 
           (it "is o when the board has one x mark"
-               (should= :o
-                        (next-mark [:empty :x     :empty
-                                    :empty :empty :empty
-                                    :empty :empty :empty])))
+              (should= :o
+                       (next-mark [:empty :x     :empty
+                                   :empty :empty :empty
+                                   :empty :empty :empty])))
 
           (it "is x when the board has one x mark and one o mark"
-               (should= :x
-                        (next-mark [:x     :o     :empty
-                                    :empty :empty :empty
-                                    :empty :empty :empty]))))
+              (should= :x
+                       (next-mark [:x     :o     :empty
+                                   :empty :empty :empty
+                                   :empty :empty :empty]))))
 
 (describe "do-turn"
           (it "places the x mark at first space in a board with no marks"
