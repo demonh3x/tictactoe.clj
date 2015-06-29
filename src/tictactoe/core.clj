@@ -35,3 +35,7 @@
 
 (defn full? [board]
   (not-any? #(= :empty %) board))
+
+(defn finished? [board]
+  (or (full? board)
+      (not= :none (winner board))))

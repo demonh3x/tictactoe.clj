@@ -113,4 +113,23 @@
                                :x :x :o
                                :x :o :x]))))
 
+(describe "finished?"
+          (it "is true when the board is full"
+              (should= true
+                       (finished? [:o :x :o
+                                   :x :x :o
+                                   :x :o :x])))
+
+          (it "is true when there is a winner"
+              (should= true
+                       (finished? [:x     :x     :x
+                                   :o     :o     :empty
+                                   :empty :empty :empty])))
+
+          (it "is false when is not full and there is no winner"
+              (should= false
+                       (finished? [:o :x :o
+                                   :x :x :o
+                                   :x :o :empty]))))
+
 (run-specs)
