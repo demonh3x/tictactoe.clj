@@ -26,18 +26,18 @@
               (should= [:x     :empty :empty
                         :empty :empty :empty
                         :empty :empty :empty]
-                       (do-turn (fn [] 0)
-                                [:empty :empty :empty
+                       (do-turn [:empty :empty :empty
                                  :empty :empty :empty
-                                 :empty :empty :empty])))
+                                 :empty :empty :empty]
+                                (fn [] 0))))
 
           (it "places the o mark at second space in a board with a x mark in the first space"
               (should= [:x     :o     :empty
                         :empty :empty :empty
                         :empty :empty :empty]
-                       (do-turn (fn [] 1)
-                                [:x     :empty :empty
+                       (do-turn [:x     :empty :empty
                                  :empty :empty :empty
-                                 :empty :empty :empty]))))
+                                 :empty :empty :empty]
+                                (fn [] 1)))))
 
 (run-specs)
