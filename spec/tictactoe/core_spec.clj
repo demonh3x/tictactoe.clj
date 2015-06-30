@@ -165,4 +165,29 @@
                                       :x     :o     :x
                                       :o     :empty :empty]))))
 
+(describe "players"
+          (it "calls player x with the board and returns its return value when it is x turn"
+              (let [player (players (fn [board]
+                                      {:pre [(= board [:x     :o     :empty
+                                                       :empty :empty :empty
+                                                       :empty :empty :empty])]}
+                                      :player-x-choice)
+                                    (fn [board] :player-o-choice))]
+                (should= :player-x-choice
+                         (player [:x     :o     :empty
+                                  :empty :empty :empty
+                                  :empty :empty :empty]))))
+
+          (it "calls player o with the board and returns its return value when it is o turn"
+              (let [player (players (fn [board] :player-x-choice)
+                                    (fn [board]
+                                      {:pre [(= board [:x     :empty :empty
+                                                       :empty :empty :empty
+                                                       :empty :empty :empty])]}
+                                      :player-o-choice))]
+                (should= :player-o-choice
+                         (player [:x     :empty :empty
+                                  :empty :empty :empty
+                                  :empty :empty :empty])))))
+
 (run-specs)

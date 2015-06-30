@@ -45,3 +45,9 @@
   (keep-indexed (fn [space mark]
                   (when (= mark :empty) space))
                 board))
+
+(defn players [x o]
+  (fn [board]
+    (case (next-mark board)
+      :x (x board)
+      :o (o board))))
