@@ -40,3 +40,8 @@
 (defn finished? [board]
   (or (full? board)
       (not= :none (winner board))))
+
+(defn empty-spaces [board]
+  (keep-indexed (fn [space mark]
+                  (when (= mark :empty) space))
+                board))

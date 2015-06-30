@@ -152,4 +152,17 @@
                                    :x :x :o
                                    :x :o :empty]))))
 
+(describe "empty-spaces"
+          (it "all in an empty board"
+              (should= '(0 1 2 3 4 5 6 7 8)
+                       (empty-spaces [:empty :empty :empty
+                                      :empty :empty :empty
+                                      :empty :empty :empty])))
+
+          (it "two in a board"
+              (should= '(7 8)
+                       (empty-spaces [:x     :o     :x
+                                      :x     :o     :x
+                                      :o     :empty :empty]))))
+
 (run-specs)
