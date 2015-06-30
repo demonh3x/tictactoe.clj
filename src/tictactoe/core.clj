@@ -9,7 +9,7 @@
       :o
       :x)))
 
-(defn do-turn [board player]
+(defn do-turn [player board]
   (let [mark         (next-mark board)
         chosen-space (player board)]
     (assoc-in board [chosen-space] mark)))
