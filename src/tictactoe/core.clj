@@ -10,8 +10,9 @@
       :x)))
 
 (defn do-turn [board player]
-  (let [chosen-space (player)]
-    (assoc-in board [chosen-space] (next-mark board))))
+  (let [mark         (next-mark board)
+        chosen-space (player board)]
+    (assoc-in board [chosen-space] mark)))
 
 (defn- marks-at [board line]
   (map #(nth board %) line))

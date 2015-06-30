@@ -22,23 +22,43 @@
                                    :empty :empty :empty]))))
 
 (describe "do-turn"
-          (it "places the x mark at first space in a board with no marks"
+          (it "places mark x at first space in a board with no marks"
               (should= [:x     :empty :empty
                         :empty :empty :empty
                         :empty :empty :empty]
                        (do-turn [:empty :empty :empty
                                  :empty :empty :empty
                                  :empty :empty :empty]
-                                (fn [] 0))))
+                                (fn [board] 0))))
 
-          (it "places the o mark at second space in a board with a x mark in the first space"
+          (it "places mark o at second space in a board with a x mark in the first space"
               (should= [:x     :o     :empty
                         :empty :empty :empty
                         :empty :empty :empty]
                        (do-turn [:x     :empty :empty
                                  :empty :empty :empty
                                  :empty :empty :empty]
-                                (fn [] 1)))))
+                                (fn [board] 1))))
+
+          (it "tells the player to play in a board with no marks"
+              (should-not-throw (do-turn [:empty :empty :empty
+                                          :empty :empty :empty
+                                          :empty :empty :empty]
+                                         (fn [board]
+                                           {:pre [(= board [:empty :empty :empty
+                                                            :empty :empty :empty
+                                                            :empty :empty :empty])]}
+                                           0))))
+
+          (it "tells the player to play in a board with a x mark"
+              (should-not-throw (do-turn [:x     :empty :empty
+                                          :empty :empty :empty
+                                          :empty :empty :empty]
+                                         (fn [board]
+                                           {:pre [(= board [:x     :empty :empty
+                                                            :empty :empty :empty
+                                                            :empty :empty :empty])]}
+                                           1)))))
 
 (describe "marks-at-lines"
           (it "are the marks at each line"
