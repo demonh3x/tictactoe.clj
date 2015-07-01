@@ -18,6 +18,16 @@
 (defn render [board]
   (to-string (map add-newline (render-rows board))))
 
+(defn- finished-message [board]
+  (if (= :none (winner board))
+    "it is a draw!"
+    (str (name (winner board)) " has won!")))
+
+(defn display [board]
+  (println (render board))
+  (when (finished? board)
+    (println (finished-message board))))
+
 (defn- read-int! []
   (try
     (Integer/parseInt (read-line))
