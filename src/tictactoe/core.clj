@@ -9,10 +9,12 @@
       :o
       :x)))
 
+(defn place-mark [board space]
+  (assoc-in board [space] (next-mark board)))
+
 (defn do-turn [player board]
-  (let [mark         (next-mark board)
-        chosen-space (player board)]
-    (assoc-in board [chosen-space] mark)))
+  (let [chosen-space (player board)]
+    (place-mark board chosen-space)))
 
 (defn- marks-at [board line]
   (map #(nth board %) line))
@@ -63,3 +65,22 @@
 (defn game [player initial-board]
   (let [boards-in-each-turn (iterate (partial do-turn player) initial-board)]
     (take-while+ #(not (finished? %)) boards-in-each-turn)))
+
+(defn- final-score [board]
+  (if (= :none (winner board))
+    0
+    1))
+
+(defn negamax-score [board]
+  (if (finished? board)
+    (final-score board)
+    (let [childs (map #(negamax-score (place-mark board %))
+                      (empty-spaces board))]
+      (- (apply max childs)))))
+
+(defn perfect-computer-player [board]
+  (let [options (map (fn option-of [empty-space]
+                       {:score (negamax-score (place-mark board empty-space))
+                        :space empty-space})
+                     (empty-spaces board))]
+    (:space (apply max-key :score options))))
