@@ -190,4 +190,46 @@
                                   :empty :empty :empty
                                   :empty :empty :empty])))))
 
+(describe "game"
+          (it "goes though all the boards until the game is finished"
+              (let [first-empty-space-player (fn [board]
+                                               (first (empty-spaces board)))
+                    board-history (game first-empty-space-player
+                                        [:empty :empty :empty
+                                         :empty :empty :empty
+                                         :empty :empty :empty])]
+                (should= [[:empty :empty :empty
+                           :empty :empty :empty
+                           :empty :empty :empty]
+
+                          [:x     :empty :empty
+                           :empty :empty :empty
+                           :empty :empty :empty]
+
+                          [:x     :o     :empty
+                           :empty :empty :empty
+                           :empty :empty :empty]
+
+                          [:x     :o     :x
+                           :empty :empty :empty
+                           :empty :empty :empty]
+
+                          [:x     :o     :x
+                           :o     :empty :empty
+                           :empty :empty :empty]
+
+                          [:x     :o     :x
+                           :o     :x     :empty
+                           :empty :empty :empty]
+
+                          [:x     :o     :x
+                           :o     :x     :o
+                           :empty :empty :empty]
+
+                          [:x     :o     :x
+                           :o     :x     :o
+                           :x     :empty :empty]
+                          ]
+                         board-history))))
+
 (run-specs)

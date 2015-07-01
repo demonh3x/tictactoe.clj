@@ -51,3 +51,15 @@
     (case (next-mark board)
       :x (x board)
       :o (o board))))
+
+(defn- take-while+ [pred coll]
+  "Behaves like take-while but includes the first element for which the predicate returns false"
+  (lazy-seq
+    (when-let [[f & r] (seq coll)]
+      (if (pred f)
+        (cons f (take-while+ pred r))
+        [f]))))
+
+(defn game [player initial-board]
+  (let [boards-in-each-turn (iterate (partial do-turn player) initial-board)]
+    (take-while+ #(not (finished? %)) boards-in-each-turn)))
