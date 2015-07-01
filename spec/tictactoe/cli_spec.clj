@@ -145,3 +145,5 @@
                                    "x has won!\n")
                               (with-out-str
                                 (-main "computer" "computer")))))
+
+(run-specs)
