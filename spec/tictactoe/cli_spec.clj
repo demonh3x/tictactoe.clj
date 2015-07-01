@@ -138,11 +138,7 @@
                                              (-main "human" "human")))))
 
           (it "runs a game between two computers"
-              (should-contain (str "xox\n"
-                                   "oxo\n"
-                                   "x--\n"
-                                   "\n"
-                                   "x has won!\n")
+              (should-contain "it is a draw!"
                               (with-out-str
                                 (-main "computer" "computer")))))
 

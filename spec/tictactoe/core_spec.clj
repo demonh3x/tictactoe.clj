@@ -269,29 +269,29 @@
                                :x :x :empty
                                :o :o :empty]))))
 
-(describe "perfect-computer-player"
+(describe "computer-player"
           (it "blocks when can lose"
               (should= 8
-                       (perfect-computer-player [:x     :o     :x
-                                                 :o     :o     :x
-                                                 :empty :x     :empty])))
+                       (computer-player [:x     :o     :x
+                                         :o     :o     :x
+                                         :empty :x     :empty])))
 
           (it "chooses to win when has te opportunity"
               (should= 6
-                       (perfect-computer-player [:x     :o     :x
-                                                 :o     :x     :empty
-                                                 :empty :empty :o])))
+                       (computer-player [:x     :o     :x
+                                         :o     :x     :empty
+                                         :empty :empty :o])))
 
           (it "creates a fork if possible"
               (should= 4
-                       (perfect-computer-player [:o     :empty :empty
-                                                 :x     :empty :empty
-                                                 :x     :o     :empty])))
+                       (computer-player [:o     :empty :empty
+                                         :x     :empty :empty
+                                         :x     :o     :empty])))
 
           (it "foresees enough to avoid losing"
               (should= 4
-                       (perfect-computer-player [:x     :empty :empty
-                                                 :empty :empty :empty
-                                                 :empty :empty :empty]))))
+                       (computer-player [:x     :empty :empty
+                                         :empty :empty :empty
+                                         :empty :empty :empty]))))
 
 (run-specs)
