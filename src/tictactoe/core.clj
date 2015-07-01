@@ -30,11 +30,11 @@
                 (= (first marks) %))
           marks))
 
-(defn winner [board]
+(def winner (memoize (fn [board]
   (let [lines (marks-at-lines board)
         winning-lines (filter same-mark? lines)
         winner (ffirst winning-lines)]
-    (or winner :none)))
+    (or winner :none)))))
 
 (defn full? [board]
   (not-any? #(= :empty %) board))
