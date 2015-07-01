@@ -80,11 +80,11 @@
             (- (apply max childs)))))
 
 (def minimum-depth-to-avoid-losing 5)
-(def negamax-score (partial negamax minimum-depth-to-avoid-losing))
+(def score (partial negamax minimum-depth-to-avoid-losing))
 
 (defn perfect-computer-player [board]
   (let [options (map (fn option-of [empty-space]
-                       {:score (negamax-score (place-mark board empty-space))
+                       {:score (score (place-mark board empty-space))
                         :space empty-space})
                      (empty-spaces board))]
     (:space (apply max-key :score options))))
