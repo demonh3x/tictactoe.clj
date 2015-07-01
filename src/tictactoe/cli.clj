@@ -55,3 +55,16 @@
 
 (defn human-player! [board]
   (ask-until-is-one-of (empty-spaces board)))
+
+(defn computer-player [board]
+  (first (empty-spaces board)))
+
+(defn -main [& args]
+  (let [initial-board [:empty :empty :empty
+                       :empty :empty :empty
+                       :empty :empty :empty]
+        player-types  {"human" human-player!
+                       "computer" computer-player}
+        players       (apply players (map player-types args))
+        board-history (map display (game players initial-board))]
+    (doall board-history)))
