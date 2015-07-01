@@ -44,15 +44,14 @@
       (println "That space is not empty!"))
     choice))
 
-(defn- first [predicate seq]
+(defn- get-first [predicate seq]
   (some predicate seq))
 
 (defn- ask-until-is-one-of [empty-spaces]
-  (let [empty-space? (fn [space]
-                       ((set empty-spaces) space))
+  (let [empty-space? #((set empty-spaces) %)
         choices (repeatedly #(ask-for empty-space?))]
     (print-to-choose-from empty-spaces)
-    (first empty-space? choices)))
+    (get-first empty-space? choices)))
 
 (defn human-player! [board]
   (ask-until-is-one-of (empty-spaces board)))
