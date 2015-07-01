@@ -71,12 +71,16 @@
     0
     1))
 
-(defn negamax-score [board]
-  (if (finished? board)
-    (final-score board)
-    (let [childs (map #(negamax-score (place-mark board %))
-                      (empty-spaces board))]
-      (- (apply max childs)))))
+(defn- negamax [depth board]
+  (cond
+    (finished? board) (final-score board)
+    (= 0 depth) 0
+    :else (let [childs (map #(negamax (- depth 1) (place-mark board %))
+                            (empty-spaces board))]
+            (- (apply max childs)))))
+
+(def minimum-depth-to-avoid-losing 5)
+(def negamax-score (partial negamax minimum-depth-to-avoid-losing))
 
 (defn perfect-computer-player [board]
   (let [options (map (fn option-of [empty-space]

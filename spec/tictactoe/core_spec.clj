@@ -286,6 +286,12 @@
               (should= 4
                        (perfect-computer-player [:o     :empty :empty
                                                  :x     :empty :empty
-                                                 :x     :o     :empty]))))
+                                                 :x     :o     :empty])))
+
+          (it "foresees enough to avoid losing"
+              (should= 4
+                       (perfect-computer-player [:x     :empty :empty
+                                                 :empty :empty :empty
+                                                 :empty :empty :empty]))))
 
 (run-specs)
