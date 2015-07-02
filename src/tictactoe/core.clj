@@ -9,7 +9,7 @@
       :o
       :x)))
 
-(defn- place-mark [at-space board]
+(defn place-mark [at-space board]
   (assoc-in board [at-space] (next-mark board)))
 
 (defn do-turn [player board]

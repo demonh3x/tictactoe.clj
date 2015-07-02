@@ -1,4 +1,4 @@
-(ns tictactoe.core-spec
+(ns tictactoe.ai-spec
   (:require [speclj.core :refer :all]
             [tictactoe.ai :refer :all]))
 

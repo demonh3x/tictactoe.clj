@@ -1,5 +1,6 @@
 (ns tictactoe.cli
-  (:require [tictactoe.core :refer :all]))
+  (:require [tictactoe.core :refer :all]
+            [tictactoe.ai :refer :all]))
 
 (defn- render-mark [mark]
   (case mark
