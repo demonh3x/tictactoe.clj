@@ -18,6 +18,7 @@
 (defn render [board]
   (to-string (map add-newline (render-rows board))))
 
+
 (defn- finished-message [board]
   (if (= :none (winner board))
     "it is a draw!"
@@ -27,6 +28,7 @@
   (println (render board))
   (when (finished? board)
     (println (finished-message board))))
+
 
 (defn- read-int! []
   (try
@@ -56,12 +58,13 @@
 (defn human-player! [board]
   (ask-until-is-one-of (empty-spaces board)))
 
+
 (defn -main [& args]
   (let [initial-board [:empty :empty :empty
                        :empty :empty :empty
                        :empty :empty :empty]
-        player-types  {"human" human-player!
+        player-types  {"human"    human-player!
                        "computer" computer-player}
         players       (apply players (map player-types args))
-        board-history (map display (game players initial-board))]
-    (doall board-history)))
+        board-history (game players initial-board)]
+    (doall (map display board-history))))

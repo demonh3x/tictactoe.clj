@@ -9,12 +9,13 @@
       :o
       :x)))
 
-(defn place-mark [board space]
-  (assoc-in board [space] (next-mark board)))
+(defn- place-mark [at-space board]
+  (assoc-in board [at-space] (next-mark board)))
 
 (defn do-turn [player board]
   (let [chosen-space (player board)]
-    (place-mark board chosen-space)))
+    (place-mark chosen-space board)))
+
 
 (defn- marks-at [board line]
   (map #(nth board %) line))
@@ -45,14 +46,9 @@
 
 (defn empty-spaces [board]
   (keep-indexed (fn [space mark]
-                  (when (= mark :empty) space))
+                  (when (= :empty mark)
+                    space))
                 board))
-
-(defn players [x o]
-  (fn [board]
-    (case (next-mark board)
-      :x (x board)
-      :o (o board))))
 
 (defn- take-while+ [pred coll]
   "Behaves like take-while but includes the first element for which the predicate returns false"
@@ -63,28 +59,11 @@
         [f]))))
 
 (defn game [player initial-board]
-  (let [boards-in-each-turn (iterate (partial do-turn player) initial-board)]
+  (let [boards-in-each-turn (iterate #(do-turn player %) initial-board)]
     (take-while+ #(not (finished? %)) boards-in-each-turn)))
 
-(defn- final-score [board]
-  (if (= :none (winner board))
-    0
-    1))
-
-(defn- negamax [depth board]
-  (cond
-    (finished? board) (* (+ 1 depth) (final-score board))
-    (= 0 depth) 0
-    :else (let [childs (map #(negamax (- depth 1) (place-mark board %))
-                            (empty-spaces board))]
-            (- (apply max childs)))))
-
-(def minimum-depth-to-avoid-losing 5)
-(def score (partial negamax minimum-depth-to-avoid-losing))
-
-(defn computer-player [board]
-  (let [options (map (fn option-of [empty-space]
-                       {:score (score (place-mark board empty-space))
-                        :space empty-space})
-                     (empty-spaces board))]
-    (:space (apply max-key :score options))))
+(defn players [x o]
+  (fn [board]
+    (case (next-mark board)
+      :x (x board)
+      :o (o board))))

@@ -165,31 +165,6 @@
                                       :x     :o     :x
                                       :o     :empty :empty]))))
 
-(describe "players"
-          (it "calls player x with the board and returns its return value when it is x turn"
-              (let [player (players (fn [board]
-                                      {:pre [(= board [:x     :o     :empty
-                                                       :empty :empty :empty
-                                                       :empty :empty :empty])]}
-                                      :player-x-choice)
-                                    (fn [board] :player-o-choice))]
-                (should= :player-x-choice
-                         (player [:x     :o     :empty
-                                  :empty :empty :empty
-                                  :empty :empty :empty]))))
-
-          (it "calls player o with the board and returns its return value when it is o turn"
-              (let [player (players (fn [board] :player-x-choice)
-                                    (fn [board]
-                                      {:pre [(= board [:x     :empty :empty
-                                                       :empty :empty :empty
-                                                       :empty :empty :empty])]}
-                                      :player-o-choice))]
-                (should= :player-o-choice
-                         (player [:x     :empty :empty
-                                  :empty :empty :empty
-                                  :empty :empty :empty])))))
-
 (describe "game"
           (it "goes though all the boards until the game is finished"
               (let [first-empty-space-player (fn [board]
@@ -232,72 +207,29 @@
                           ]
                          board-history))))
 
-(describe "score"
-          (it "scores positively a board won by player x"
-              (should-be #(> % 0)
-                       (score [:empty :o     :x
-                               :empty :o     :x
-                               :empty :empty :x])))
+(describe "players"
+          (it "calls player x with the board and returns its return value when it is x turn"
+              (let [player (players (fn [board]
+                                      {:pre [(= board [:x     :o     :empty
+                                                       :empty :empty :empty
+                                                       :empty :empty :empty])]}
+                                      :player-x-choice)
+                                    (fn [board] :player-o-choice))]
+                (should= :player-x-choice
+                         (player [:x     :o     :empty
+                                  :empty :empty :empty
+                                  :empty :empty :empty]))))
 
-          (it "scores positively a board won by player o"
-              (should-be #(> % 0)
-                       (score [:x     :o :x
-                               :empty :o :x
-                               :empty :o :empty])))
-
-          (it "scores neutrally a board ended in a draw"
-              (should= 0
-                       (score [:x :o :x
-                               :x :o :x
-                               :o :x :o])))
-
-          (it "scores negativelly a board that will be won by the opponent in this turn"
-              (should-be #(< % 0)
-                       (score [:o :x :x
-                               :x :o :x
-                               :o :o :empty])))
-
-          (it "scores neutrally a board that will end in a draw"
-              (should= 0
-                       (score [:o :x :x
-                               :x :x :o
-                               :o :o :empty])))
-
-          (it "scores negativelly a board that will be won by the opponent in this turn"
-              (should-be #(< % 0)
-                       (score [:o :x :x
-                               :x :x :empty
-                               :o :o :empty]))))
-
-(describe "computer-player"
-          (it "blocks when can lose"
-              (should= 8
-                       (computer-player [:x     :o     :x
-                                         :o     :o     :x
-                                         :empty :x     :empty])))
-
-          (it "chooses to win when has te opportunity"
-              (should= 6
-                       (computer-player [:x     :o     :x
-                                         :o     :x     :empty
-                                         :empty :empty :o])))
-
-          (it "creates a fork if possible"
-              (should= 4
-                       (computer-player [:o     :empty :empty
-                                         :x     :empty :empty
-                                         :x     :o     :empty])))
-
-          (it "foresees enough to avoid losing"
-              (should= 4
-                       (computer-player [:x     :empty :empty
-                                         :empty :empty :empty
-                                         :empty :empty :empty])))
-
-          (it "chooses an immediate win over a fork"
-              (should= 2
-                       (computer-player [:x :x     :empty
-                                         :o :empty :empty
-                                         :o :empty :empty]))))
+          (it "calls player o with the board and returns its return value when it is o turn"
+              (let [player (players (fn [board] :player-x-choice)
+                                    (fn [board]
+                                      {:pre [(= board [:x     :empty :empty
+                                                       :empty :empty :empty
+                                                       :empty :empty :empty])]}
+                                      :player-o-choice))]
+                (should= :player-o-choice
+                         (player [:x     :empty :empty
+                                  :empty :empty :empty
+                                  :empty :empty :empty])))))
 
 (run-specs)
