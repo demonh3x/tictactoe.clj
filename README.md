@@ -19,7 +19,20 @@ This is an implementation of the tic-tac-toe game (or Noughts and crosses, Xs an
 
 [lein]: http://leiningen.org/
 
-## Setup
+## Test
 
-##### Run tests
 `lein test`
+
+## Compile
+
+`lein uberjar` will create a JVM *.jar in the folder `target/uberjar`
+
+## Run
+
+`lein run` will run the game. 
+
+It receives two arguments: the types of the players (human / computer).
+
+For example, to run a human vs computer game would be:
+
+`lein run human computer`
