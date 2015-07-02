@@ -21,7 +21,10 @@ This is an implementation of the tic-tac-toe game (or Noughts and crosses, Xs an
 
 ## Test
 
-`lein test`
+`lein test` will run the tests once.
+
+If you want to make changes and have fast feedback from the tests, run `lein spec -a`. 
+It will avoid starting the JVM each time and will run the tests each time a change is made in a file.
 
 ## Compile
 
