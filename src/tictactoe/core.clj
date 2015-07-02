@@ -73,7 +73,7 @@
 
 (defn- negamax [depth board]
   (cond
-    (finished? board) (final-score board)
+    (finished? board) (* (+ 1 depth) (final-score board))
     (= 0 depth) 0
     :else (let [childs (map #(negamax (- depth 1) (place-mark board %))
                             (empty-spaces board))]

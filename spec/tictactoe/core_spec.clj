@@ -234,13 +234,13 @@
 
 (describe "score"
           (it "scores positively a board won by player x"
-              (should= 1
+              (should-be #(> % 0)
                        (score [:empty :o     :x
                                :empty :o     :x
                                :empty :empty :x])))
 
           (it "scores positively a board won by player o"
-              (should= 1
+              (should-be #(> % 0)
                        (score [:x     :o :x
                                :empty :o :x
                                :empty :o :empty])))
@@ -252,7 +252,7 @@
                                :o :x :o])))
 
           (it "scores negativelly a board that will be won by the opponent in this turn"
-              (should= -1
+              (should-be #(< % 0)
                        (score [:o :x :x
                                :x :o :x
                                :o :o :empty])))
@@ -264,7 +264,7 @@
                                :o :o :empty])))
 
           (it "scores negativelly a board that will be won by the opponent in this turn"
-              (should= -1
+              (should-be #(< % 0)
                        (score [:o :x :x
                                :x :x :empty
                                :o :o :empty]))))
@@ -292,6 +292,12 @@
               (should= 4
                        (computer-player [:x     :empty :empty
                                          :empty :empty :empty
-                                         :empty :empty :empty]))))
+                                         :empty :empty :empty])))
+
+          (it "chooses an immediate win over a fork"
+              (should= 2
+                       (computer-player [:x :x     :empty
+                                         :o :empty :empty
+                                         :o :empty :empty]))))
 
 (run-specs)
