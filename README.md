@@ -4,6 +4,18 @@
 
 This is an implementation of the tic-tac-toe game (or Noughts and crosses, Xs and Os) in Clojure.
 
+## Features
+
+##### User interface
+* CLI
+
+##### Board size
+* 3x3
+
+##### Perfect computer player
+* Never loses
+* Wins as fast as possible
+
 ## Dependencies
 
 ##### Execution
