@@ -1,5 +1,5 @@
 (ns tictactoe.cli
-  (:require [tictactoe.core :refer [winner finished? empty-spaces players game]]))
+  (:require [tictactoe.core :refer [winner finished? empty-spaces]]))
 
 (defn- render-mark [mark]
   (case mark

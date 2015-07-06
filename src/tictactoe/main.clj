@@ -1,6 +1,6 @@
 (ns tictactoe.main
   (:require [tictactoe.cli :refer [human-player! display]]
-            [tictactoe.core :refer [players game]]
+            [tictactoe.game :refer [players game]]
             [tictactoe.ai :refer [computer-player]]))
 
 (defn -main [& args]
