@@ -4,13 +4,13 @@
 
 (describe "score"
           (it "scores positively a board won by player x"
-              (should-be #(> % 0)
+              (should-be pos?
                          (score [:empty :o     :x
                                  :empty :o     :x
                                  :empty :empty :x])))
 
           (it "scores positively a board won by player o"
-              (should-be #(> % 0)
+              (should-be pos?
                          (score [:x     :o :x
                                  :empty :o :x
                                  :empty :o :empty])))
@@ -22,13 +22,13 @@
                                :o :x :o])))
 
           (it "scores negativelly a board that will be won by the opponent in this turn"
-              (should-be #(< % 0)
+              (should-be neg?
                          (score [:o :x :x
                                  :x :o :x
                                  :o :o :empty])))
 
           (it "scores negativelly a board that will be won by the opponent in this turn"
-              (should-be #(< % 0)
+              (should-be neg?
                          (score [:o :x :x
                                  :x :x :empty
                                  :o :o :empty])))
