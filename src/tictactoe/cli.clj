@@ -1,6 +1,6 @@
 (ns tictactoe.cli
-  (:require [tictactoe.core :refer :all]
-            [tictactoe.ai :refer :all]))
+  (:require [tictactoe.core :refer [winner finished? empty-spaces players game]]
+            [tictactoe.ai :refer [computer-player]]))
 
 (defn- render-mark [mark]
   (case mark
