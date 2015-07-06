@@ -1,5 +1,5 @@
 (ns tictactoe.cli
-  (:require [tictactoe.board :refer [winner finished? empty-spaces]]))
+  (:require [tictactoe.board :refer [empty-spaces]]))
 
 (defn- render-mark [mark]
   (case mark
@@ -15,20 +15,16 @@
 (defn- to-string [rows]
   (apply str (flatten rows)))
 
-(defn render [board]
+(defn- render [board]
   (to-string (map add-newline (render-rows board))))
 
-
-(defn- finished-message [board]
-  (if (= :none (winner board))
+(defn- outcome [winner]
+  (if (= :none winner)
     "it is a draw!"
-    (str (name (winner board)) " has won!")))
+    (str (name winner) " has won!")))
 
-(defn display [board]
-  (println (render board))
-  (when (finished? board)
-    (println (finished-message board))))
-
+(def print-board (comp print render))
+(def print-outcome (comp println outcome))
 
 (defn- read-int! []
   (try

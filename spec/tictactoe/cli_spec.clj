@@ -7,69 +7,44 @@
               (should= (str "---\n"
                             "---\n"
                             "---\n")
-                       (render [:empty :empty :empty
-                                :empty :empty :empty
-                                :empty :empty :empty])))
+                       (with-out-str
+                         (print-board [:empty :empty :empty
+                                       :empty :empty :empty
+                                       :empty :empty :empty]))))
 
           (it "with a x mark"
               (should= (str "x--\n"
                             "---\n"
                             "---\n")
-                       (render [:x     :empty :empty
-                                :empty :empty :empty
-                                :empty :empty :empty])))
+                       (with-out-str
+                         (print-board [:x     :empty :empty
+                                       :empty :empty :empty
+                                       :empty :empty :empty]))))
 
           (it "with a x and a o marks"
               (should= (str "xo-\n"
                             "---\n"
                             "---\n")
-                       (render [:x     :o     :empty
-                                :empty :empty :empty
-                                :empty :empty :empty]))))
-
-(describe "display"
-          (it "prints the rendered board"
-              (should= (str "xo-\n"
-                            "---\n"
-                            "---\n"
-                            "\n")
                        (with-out-str
-                         (display [:x     :o     :empty
-                                   :empty :empty :empty
-                                   :empty :empty :empty]))))
+                         (print-board [:x     :o     :empty
+                                       :empty :empty :empty
+                                       :empty :empty :empty])))))
 
+(describe "print-outcome"
           (it "prints x as the winner"
-              (should= (str "xxx\n"
-                            "oo-\n"
-                            "---\n"
-                            "\n"
-                            "x has won!\n")
+              (should= "x has won!\n"
                        (with-out-str
-                         (display [:x     :x     :x
-                                   :o     :o     :empty
-                                   :empty :empty :empty]))))
+                         (print-outcome :x))))
 
           (it "prints o as the winner"
-              (should= (str "xx-\n"
-                            "ooo\n"
-                            "x--\n"
-                            "\n"
-                            "o has won!\n")
+              (should= "o has won!\n"
                        (with-out-str
-                         (display [:x     :x     :empty
-                                   :o     :o     :o
-                                   :x     :empty :empty]))))
+                         (print-outcome :o))))
 
           (it "prints the draw message"
-              (should= (str "xxo\n"
-                            "oox\n"
-                            "xxo\n"
-                            "\n"
-                            "it is a draw!\n")
+              (should= "it is a draw!\n"
                        (with-out-str
-                         (display [:x     :x     :o
-                                   :o     :o     :x
-                                   :x     :x     :o])))))
+                         (print-outcome :none)))))
 
 (describe "human-player!"
           (around [it] (with-out-str (it)))
