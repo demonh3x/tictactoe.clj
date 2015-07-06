@@ -34,8 +34,7 @@
   (try
     (Integer/parseInt (read-line))
     (catch NumberFormatException e
-      (println "That is not a number!")
-      (read-int!))))
+      (println "That is not a number!"))))
 
 (defn- print-to-choose-from [empty-spaces]
   (println "It is your turn! Choose one space:" (pr-str empty-spaces)))
