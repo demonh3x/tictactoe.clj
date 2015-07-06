@@ -1,6 +1,6 @@
-(ns tictactoe.core-spec
+(ns tictactoe.board-spec
   (:require [speclj.core :refer :all]
-            [tictactoe.core :refer :all]))
+            [tictactoe.board :refer :all]))
 
 (describe "next-mark"
           (it "is x when the board has no marks"

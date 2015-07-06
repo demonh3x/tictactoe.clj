@@ -1,7 +1,7 @@
 (ns tictactoe.game-spec
   (:require [speclj.core :refer :all]
             [tictactoe.game :refer :all]
-            [tictactoe.core :refer [empty-spaces]]))
+            [tictactoe.board :refer [empty-spaces]]))
 
 (describe "do-turn"
           (it "places mark x at first space in a board with no marks"

@@ -1,5 +1,5 @@
 (ns tictactoe.game
-  (:require [tictactoe.core :refer [place-mark empty-spaces finished? next-mark]]))
+  (:require [tictactoe.board :refer [place-mark empty-spaces finished? next-mark]]))
 
 (defn do-turn [player board]
   (let [chosen-space (player board)]

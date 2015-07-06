@@ -1,5 +1,5 @@
 (ns tictactoe.ai
-  (:require [tictactoe.core :refer [winner finished? place-mark empty-spaces]]))
+  (:require [tictactoe.board :refer [winner finished? place-mark empty-spaces]]))
 
 (defn- final-score [board]
   (if (= :none (winner board))
