@@ -1,5 +1,10 @@
 (ns tictactoe.board)
 
+(def empty-board
+  [:empty :empty :empty
+   :empty :empty :empty
+   :empty :empty :empty])
+
 (defn- count-marks-in [board mark-type]
   (count (filter #(= mark-type %) board)))
 
