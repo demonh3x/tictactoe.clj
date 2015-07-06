@@ -4,11 +4,8 @@
             [tictactoe.ai :refer [computer-player]]))
 
 (defn -main [& args]
-  (let [initial-board [:empty :empty :empty
-                       :empty :empty :empty
-                       :empty :empty :empty]
-        player-types  {"human"    human-player!
+  (let [player-types  {"human"    human-player!
                        "computer" computer-player}
         players       (apply players (map player-types args))
-        board-history (game players initial-board)]
+        board-history (game players)]
     (doall (map display board-history))))

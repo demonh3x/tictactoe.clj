@@ -13,7 +13,12 @@
         (cons f (take-while+ pred r))
         [f]))))
 
-(defn game [player initial-board]
+(def initial-board
+  [:empty :empty :empty
+   :empty :empty :empty
+   :empty :empty :empty])
+
+(defn game [player]
   (let [boards-in-each-turn (iterate #(do-turn player %) initial-board)]
     (take-while+ #(not (finished? %)) boards-in-each-turn)))
 
