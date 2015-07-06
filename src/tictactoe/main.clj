@@ -1,6 +1,5 @@
 (ns tictactoe.main
   (:require [tictactoe.cli :refer [human-player! print-board print-outcome]]
-            [tictactoe.board :refer [winner]]
             [tictactoe.game :refer [players game]]
             [tictactoe.ai :refer [computer-player]]))
 
@@ -8,6 +7,6 @@
   (let [player-types  {"human"    human-player!
                        "computer" computer-player}
         players       (apply players (map player-types args))
-        board-history (game players)]
-    (doall (map print-board board-history))
-    (print-outcome (winner (last board-history)))))
+        game-history  (game players)]
+    (doall (map print-board (map :board game-history)))
+    (print-outcome (:winner (last game-history)))))

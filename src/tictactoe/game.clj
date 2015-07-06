@@ -1,5 +1,5 @@
 (ns tictactoe.game
-  (:require [tictactoe.board :refer [place-mark finished? next-mark]]))
+  (:require [tictactoe.board :refer [place-mark finished? winner next-mark]]))
 
 (defn do-turn [player board]
   (let [chosen-space (player board)]
@@ -19,9 +19,12 @@
    :empty :empty :empty
    :empty :empty :empty])
 
+(defn- game-state [board]
+  {:board board :winner (winner board)})
+
 (defn game [player]
   (let [boards-in-each-turn (iterate #(do-turn player %) initial-board)]
-    (take-while+ #(not (finished? %)) boards-in-each-turn)))
+    (map game-state (take-while+ #(not (finished? %)) boards-in-each-turn))))
 
 (defn players [x o]
   (fn [board]

@@ -43,43 +43,49 @@
                                           :empty :empty :empty]))))
 
 (describe "game"
-          (it "goes though all the boards until the game is finished"
+          (it "goes though the history of it"
               (let [first-empty-space-player (fn [board]
-                                               (first (empty-spaces board)))
-                    board-history (game first-empty-space-player)]
-                (should= [[:empty :empty :empty
-                           :empty :empty :empty
-                           :empty :empty :empty]
+                                               (first (empty-spaces board)))]
+                (should= [{:board [:empty :empty :empty
+                                   :empty :empty :empty
+                                   :empty :empty :empty]
+                           :winner :none}
 
-                          [:x     :empty :empty
-                           :empty :empty :empty
-                           :empty :empty :empty]
+                          {:board [:x     :empty :empty
+                                   :empty :empty :empty
+                                   :empty :empty :empty]
+                           :winner :none}
 
-                          [:x     :o     :empty
-                           :empty :empty :empty
-                           :empty :empty :empty]
+                          {:board [:x     :o     :empty
+                                   :empty :empty :empty
+                                   :empty :empty :empty]
+                           :winner :none}
 
-                          [:x     :o     :x
-                           :empty :empty :empty
-                           :empty :empty :empty]
+                          {:board [:x     :o     :x
+                                   :empty :empty :empty
+                                   :empty :empty :empty]
+                           :winner :none}
 
-                          [:x     :o     :x
-                           :o     :empty :empty
-                           :empty :empty :empty]
+                          {:board [:x     :o     :x
+                                   :o     :empty :empty
+                                   :empty :empty :empty]
+                           :winner :none}
 
-                          [:x     :o     :x
-                           :o     :x     :empty
-                           :empty :empty :empty]
+                          {:board [:x     :o     :x
+                                   :o     :x     :empty
+                                   :empty :empty :empty]
+                           :winner :none}
 
-                          [:x     :o     :x
-                           :o     :x     :o
-                           :empty :empty :empty]
+                          {:board [:x     :o     :x
+                                   :o     :x     :o
+                                   :empty :empty :empty]
+                           :winner :none}
 
-                          [:x     :o     :x
-                           :o     :x     :o
-                           :x     :empty :empty]
-                          ]
-                         board-history))))
+                          {:board [:x     :o     :x
+                                   :o     :x     :o
+                                   :x     :empty :empty]
+                           :winner :x}]
+                         (game first-empty-space-player)))))
 
 (describe "players"
           (it "calls player x with the board and returns its return value when it is x turn"
