@@ -5,11 +5,9 @@
   (let [chosen-space (player board)]
     (place-mark chosen-space board)))
 
-(defn- take-while+
-  "Behaves like take-while but includes the first element for which the predicate returns false"
-  [predicate collection]
-  (lazy-seq
-    (when-let [[current & rest] (seq collection)]
+(defn- take-while+ [predicate collection]
+  (let [[current & rest] collection]
+    (lazy-seq
       (if (predicate current)
         (cons current (take-while+ predicate rest))
         [current]))))
