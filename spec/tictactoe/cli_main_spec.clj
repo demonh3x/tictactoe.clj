@@ -1,6 +1,6 @@
-(ns tictactoe.main-spec
+(ns tictactoe.cli-main-spec
   (:require [speclj.core :refer :all]
-            [tictactoe.main :refer :all]))
+            [tictactoe.cli-main :refer :all]))
 
 (describe "main"
           (it "runs a game between two humans"

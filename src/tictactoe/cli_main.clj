@@ -1,4 +1,4 @@
-(ns tictactoe.main
+(ns tictactoe.cli-main
   (:require [tictactoe.cli :refer [human-player! print-board print-outcome]]
             [tictactoe.game :refer [players game]]
             [tictactoe.ai :refer [computer-player]]))

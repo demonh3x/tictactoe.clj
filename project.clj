@@ -8,4 +8,4 @@
   :plugins [[speclj "3.3.1"]]
   :test-paths ["spec"]
   :target-path "target/%s"
-  :main ^:skip-aot tictactoe.main)
+  :main ^:skip-aot tictactoe.cli-main)
