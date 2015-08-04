@@ -6,8 +6,8 @@
     (place-mark chosen-space board)))
 
 (defn- take-while+ [predicate collection]
-  (let [[current & rest] collection]
-    (lazy-seq
+  (lazy-seq
+    (let [[current & rest] collection]
       (if (predicate current)
         (cons current (take-while+ predicate rest))
         [current]))))
