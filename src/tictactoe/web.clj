@@ -1,6 +1,5 @@
 (ns tictactoe.web
   (:require [tictactoe.game :refer [game]]
-            [tictactoe.board :refer [finished?]]
             [tictactoe.html :refer [render-game]]
             [compojure.core :refer [defroutes GET]]
             [compojure.route :refer [resources not-found]]
@@ -15,8 +14,7 @@
 (def running-game (atom nil))
 
 (defn- get-game []
-  (let [game (first @running-game)]
-    (assoc game :finished (finished? (:board game)))))
+  (first @running-game))
 
 (defn- initialize-game []
   (swap! running-game (fn [prev] (game (player-moving-to user-selected-space)))))

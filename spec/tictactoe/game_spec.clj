@@ -49,41 +49,57 @@
                 (should= [{:board [:empty :empty :empty
                                    :empty :empty :empty
                                    :empty :empty :empty]
+                           :next-mark :x
+                           :finished false
                            :winner :none}
 
                           {:board [:x     :empty :empty
                                    :empty :empty :empty
                                    :empty :empty :empty]
+                           :next-mark :o
+                           :finished false
                            :winner :none}
 
                           {:board [:x     :o     :empty
                                    :empty :empty :empty
                                    :empty :empty :empty]
+                           :next-mark :x
+                           :finished false
                            :winner :none}
 
                           {:board [:x     :o     :x
                                    :empty :empty :empty
                                    :empty :empty :empty]
+                           :next-mark :o
+                           :finished false
                            :winner :none}
 
                           {:board [:x     :o     :x
                                    :o     :empty :empty
                                    :empty :empty :empty]
+                           :next-mark :x
+                           :finished false
                            :winner :none}
 
                           {:board [:x     :o     :x
                                    :o     :x     :empty
                                    :empty :empty :empty]
+                           :next-mark :o
+                           :finished false
                            :winner :none}
 
                           {:board [:x     :o     :x
                                    :o     :x     :o
                                    :empty :empty :empty]
+                           :next-mark :x
+                           :finished false
                            :winner :none}
 
                           {:board [:x     :o     :x
                                    :o     :x     :o
                                    :x     :empty :empty]
+                           :next-mark :o
+                           :finished true
                            :winner :x}]
                          (game first-empty-space-player)))))
 
