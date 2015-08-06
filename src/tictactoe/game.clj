@@ -13,7 +13,10 @@
         [current]))))
 
 (defn- game-state [board]
-  {:board board :winner (winner board)})
+  {:board board
+   :next-mark (next-mark board)
+   :finished (finished? board)
+   :winner (winner board)})
 
 (defn game [player]
   (let [boards-in-each-turn (iterate #(do-turn player %) empty-board)]
