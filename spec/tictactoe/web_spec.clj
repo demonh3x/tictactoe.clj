@@ -10,21 +10,14 @@
       webapp))
 
 (defn follow-redirect [response]
-  (run-request (get-redirect-url response)))
+  (run-request (redirect-url response)))
 
 (defn follow-refresh [response]
-  (run-request (get-refresh-url response)))
+  (run-request ((in-response-body find-refresh-url) response)))
 
-(defn get-links [response]
-  (->> response
-       (find-in-html [:a])
-       (map #(get-in % [:attrs :href]))))
+(def responded-spaces (in-response-body find-spaces))
 
-(defn get-spaces [response]
-  (->> response
-       (find-in-html [(attr= :data-space)])
-       (map #(get-in % [:attrs :data-space]))
-       (filter #(not (nil? %)))))
+(def responded-links (in-response-body find-links))
 
 (describe "webapp"
           (describe "human vs human"
@@ -32,7 +25,7 @@
                         (should= 9
                                  (->> (run-request "/new-game?x=human&o=human")
                                       (follow-redirect)
-                                      (get-spaces)
+                                      (responded-spaces)
                                       (filter #(= % "empty"))
                                       count)))
 
@@ -48,14 +41,14 @@
                                   "/move?space=8"]
                                  (->> (run-request "/new-game?x=human&o=human")
                                       (follow-redirect)
-                                      (get-links))))
+                                      (responded-links))))
 
                     (it "displays x in the first space after making the move"
                         (should= "x"
                                  (do (run-request "/new-game?x=human&o=human")
                                      (->> (run-request "/move?space=0")
                                           (follow-redirect)
-                                          (get-spaces)
+                                          (responded-spaces)
                                           first))))
 
                     (it "displays o in the second space after making the move"
@@ -64,7 +57,7 @@
                                      (run-request "/move?space=0")
                                      (->> (run-request "/move?space=1")
                                           (follow-redirect)
-                                          (get-spaces)
+                                          (responded-spaces)
                                           second)))))
 
           (describe "computer vs human"
@@ -74,7 +67,7 @@
                                       (follow-redirect)
                                       (follow-refresh)
                                       (follow-redirect)
-                                      (get-spaces)
+                                      (responded-spaces)
                                       (filter #(= % "x"))
                                       count)))))
 
