@@ -1,0 +1,25 @@
+body {
+  font-family: monospace;
+  font-size: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+body, [data-board] {
+  margin: auto;
+  display: table;
+}
+
+[data-board] {
+  height: 4em;
+  width: 4em;
+}
+
+[data-space] {
+  min-height: 33%;
+  min-width: 33%;
+  float: left;
+  text-align: center;
+}

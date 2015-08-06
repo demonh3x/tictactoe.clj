@@ -3,7 +3,7 @@
             [tictactoe.board :refer [finished?]]
             [tictactoe.html :refer [render-game]]
             [compojure.core :refer [defroutes GET]]
-            [compojure.route :refer [not-found]]
+            [compojure.route :refer [resources not-found]]
             [ring.middleware.params :refer [wrap-params]]))
 
 (defn player-moving-to [space]
@@ -47,6 +47,7 @@
 (defroutes routes
            (GET "/" [] new-game)
            (GET "/move" [] move)
+           (resources "/")
            (not-found "Not found"))
 
 (def webapp (wrap-params routes))

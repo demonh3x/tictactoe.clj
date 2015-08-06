@@ -19,7 +19,8 @@
 (defn get-spaces [response]
   (->> response
        (find-in-html [(attr= :data-space)])
-       (map #(get-in % [:attrs :data-space]))))
+       (map #(get-in % [:attrs :data-space]))
+       (filter #(not (nil? %)))))
 
 (describe "webapp"
           (it "displays 9 empty spaces in an initial game between two humans"
