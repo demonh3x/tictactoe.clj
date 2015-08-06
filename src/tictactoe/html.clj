@@ -11,7 +11,7 @@
         space-to-display))))
 
 (defn- render-space [routes user-turn space mark]
-  (str "<div data-space='" (name mark) "'>"
+  (str "<div class='space' data-space='" (name mark) "'>"
        (render-mark routes user-turn space mark)
        "</div>"))
 
@@ -20,7 +20,7 @@
        (:user-plays-next game)))
 
 (defn- render-spaces [routes game]
-  (str "<div data-board>"
+  (str "<div class='board' data-board>"
        (apply str
          (map-indexed (partial render-space routes (user-turn? game)) (:board game)))
        "</div>"))

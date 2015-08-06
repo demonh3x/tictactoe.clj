@@ -7,17 +7,17 @@ h1, p {
   text-align: center;
 }
 
-body, [data-board] {
+body, .board {
   margin: auto;
   display: table;
 }
 
-[data-board] {
+.board {
   height: 4em;
   width: 4em;
 }
 
-[data-space] {
+.space {
   min-height: 33%;
   min-width: 33%;
   float: left;
