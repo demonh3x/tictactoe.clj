@@ -1,4 +1,4 @@
-(ns tictactoe.ring-test
+(ns tictactoe.ring_test
   (:require [net.cgrand.enlive-html :refer [html-resource select attr=]]))
 
 (defn request [url]

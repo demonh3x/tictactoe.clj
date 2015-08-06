@@ -1,7 +1,7 @@
-(ns tictactoe.web-spec
+(ns tictactoe.web_spec
   (:require [speclj.core :refer :all]
             [tictactoe.web :refer :all]
-            [tictactoe.ring-test :refer :all]
+            [tictactoe.ring_test :refer :all]
             [net.cgrand.enlive-html :refer [attr=]]))
 
 (defn run-request [url]

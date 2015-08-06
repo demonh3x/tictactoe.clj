@@ -1,4 +1,4 @@
-(ns tictactoe.cli-spec
+(ns tictactoe.cli_spec
   (:require [speclj.core :refer :all]
             [tictactoe.cli :refer :all]))
 

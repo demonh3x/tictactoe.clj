@@ -1,7 +1,7 @@
-(ns tictactoe.html-spec
+(ns tictactoe.html_spec
   (:require [speclj.core :refer :all]
             [tictactoe.html :refer :all]
-            [tictactoe.ring-test :refer :all]
+            [tictactoe.ring_test :refer :all]
             [net.cgrand.enlive-html :refer [html-resource select attr=]]))
 
 (def routes {:user-move "/move"

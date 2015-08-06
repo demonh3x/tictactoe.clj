@@ -1,4 +1,4 @@
-(ns tictactoe.board-spec
+(ns tictactoe.board_spec
   (:require [speclj.core :refer :all]
             [tictactoe.board :refer :all]))
 

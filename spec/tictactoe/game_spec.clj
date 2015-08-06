@@ -1,4 +1,4 @@
-(ns tictactoe.game-spec
+(ns tictactoe.game_spec
   (:require [speclj.core :refer :all]
             [tictactoe.game :refer :all]
             [tictactoe.board :refer [empty-spaces]]))
