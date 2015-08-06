@@ -4,7 +4,7 @@
             [net.cgrand.enlive-html :refer [html-resource select attr=]]))
 
 (describe "render-game"
-          (it "renders links for the empty spaces"
+          (it "renders links for the empty spaces when the user plays next"
               (should-contain (str "<div data-space='x'>x</div>"
                                    "<div data-space='o'>o</div>"
                                    "<div data-space='empty'><a href='/move?space=2'>3</a></div>"
@@ -17,7 +17,24 @@
                               (render-game {:board [:x     :o     :empty
                                                     :empty :empty :empty
                                                     :empty :empty :empty]
-                                     :finished false})))
+                                            :user-plays-next true
+                                            :finished false})))
+
+          (it "renders no links when the user does not play next"
+              (should-contain (str "<div data-space='x'>x</div>"
+                                   "<div data-space='o'>o</div>"
+                                   "<div data-space='empty'>3</div>"
+                                   "<div data-space='empty'>4</div>"
+                                   "<div data-space='empty'>5</div>"
+                                   "<div data-space='empty'>6</div>"
+                                   "<div data-space='empty'>7</div>"
+                                   "<div data-space='empty'>8</div>"
+                                   "<div data-space='empty'>9</div>")
+                              (render-game {:board [:x     :o     :empty
+                                                    :empty :empty :empty
+                                                    :empty :empty :empty]
+                                            :user-plays-next false
+                                            :finished false})))
 
           (it "renders no links when it is finished"
               (should-contain (str "<div data-space='x'>x</div>"
@@ -32,8 +49,26 @@
                               (render-game {:board [:x     :x     :x
                                                     :o     :o     :empty
                                                     :empty :empty :empty]
+                                            :user-plays-next true
                                             :finished true
                                             :winner :x})))
+
+          (it "sets an automatic refresh when the user does not play next"
+              (should-contain "<meta http-equiv='refresh' content='1; url=/computer-move'>"
+                              (render-game {:board [:x     :o     :empty
+                                                    :empty :empty :empty
+                                                    :empty :empty :empty]
+                                            :user-plays-next false
+                                            :finished false})))
+
+          (it "does not set an automatic refresh when it is finished"
+              (should-not-contain "<meta http-equiv='refresh'"
+                                  (render-game {:board [:x     :x     :x
+                                                        :o     :o     :empty
+                                                        :empty :empty :empty]
+                                                :user-plays-next false
+                                                :finished true
+                                                :winner :x})))
 
           (it "renders the outcome when it is finished"
               (should-contain "<div data-outcome='x'>The winner is x!</div>"
