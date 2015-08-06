@@ -4,7 +4,8 @@
             [tictactoe.html :refer [render-game]]
             [compojure.core :refer [defroutes GET]]
             [compojure.route :refer [resources not-found]]
-            [ring.middleware.params :refer [wrap-params]]))
+            [ring.middleware.params :refer [wrap-params]]
+            [ring.util.response :refer [redirect]]))
 
 (defn player-moving-to [space]
   (fn [board]
@@ -36,17 +37,21 @@
 (defn- respond-with-game-view []
   {:body (render-game (get-game))})
 
+(defn- board [request]
+  (respond-with-game-view))
+
 (defn- new-game [request]
   (initialize-game)
-  (respond-with-game-view))
+  (redirect "/board"))
 
 (defn- move [request]
   (user-will-move-to (space-from request))
-  (respond-with-game-view))
+  (redirect "/board"))
 
 (defroutes routes
            (GET "/" [] new-game)
            (GET "/move" [] move)
+           (GET "/board" [] board)
            (resources "/")
            (not-found "Not found"))
 

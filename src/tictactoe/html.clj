@@ -1,13 +1,14 @@
 (ns tictactoe.html)
 
 (defn- render-mark [finished space mark]
-  (if (= :empty mark)
-    (if finished
-      (+ 1 space)
-      (str "<a href='/move?space=" space "'>"
-           (+ 1 space)
-           "</a>"))
-    (name mark)))
+  (let [space-to-display (+ 1 space)]
+    (if (not= :empty mark)
+      (name mark)
+      (if finished
+        space-to-display
+        (str "<a href='/move?space=" space "'>"
+             space-to-display
+             "</a>")))))
 
 (defn- render-space [finished space mark]
   (str "<div data-space='" (name mark) "'>"

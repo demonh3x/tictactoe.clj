@@ -11,6 +11,11 @@
   (let [html (->> response :body java.io.StringReader. html-resource)]
     (select html selector)))
 
+(defn follow-redirect [response]
+  (-> response
+      (get-in [:headers "Location"])
+      request))
+
 (defn get-links [response]
   (->> response
        (find-in-html [:a])
@@ -26,6 +31,7 @@
           (it "displays 9 empty spaces in an initial game between two humans"
               (should= 9
                        (->> (request "/")
+                            (follow-redirect)
                             (get-spaces)
                             (filter #(= % "empty"))
                             count)))
@@ -41,12 +47,14 @@
                         "/move?space=7"
                         "/move?space=8"]
                        (->> (request "/")
+                            (follow-redirect)
                             (get-links))))
 
           (it "displays x in the first space after making the move"
               (should= "x"
                        (do (request "/")
                            (->> (request "/move?space=0")
+                                (follow-redirect)
                                 (get-spaces)
                                 first))))
 
@@ -55,6 +63,7 @@
                        (do (request "/")
                            (request "/move?space=0")
                            (->> (request "/move?space=1")
+                                (follow-redirect)
                                 (get-spaces)
                                 second)))))
 
