@@ -1,7 +1,7 @@
 (ns tictactoe.web
   (:require [tictactoe.game :refer [game players]]
             [tictactoe.ai :refer [computer-player]]
-            [tictactoe.html :refer [render-game]]
+            [tictactoe.html :refer [render-game render-menu]]
             [compojure.core :refer [defroutes GET]]
             [compojure.route :refer [resources not-found]]
             [ring.middleware.params :refer [wrap-params]]
@@ -67,11 +67,11 @@
   (advance-game)
   (redirect "/board"))
 
-(defn- options [request]
-  {:body ""})
+(defn- menu [request]
+  {:body (render-menu)})
 
 (defroutes routes
-           (GET "/" [] options)
+           (GET "/" [] menu)
            (GET "/new-game" [] new-game)
            (GET "/move" [] move)
            (GET "/computer-move" [] computer-move)

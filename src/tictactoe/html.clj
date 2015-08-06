@@ -54,5 +54,30 @@
        "</head><body>"
        "<h1>Tictactoe</h1>"
        (render-spaces game)
+       "<div class='outcome'>"
        (render-outcome game)
+       "</div>"
+       "</body></html>"))
+
+(defn render-menu []
+  (str "<!DOCTYPE html><html><head>"
+       "<title>Tictactoe</title>"
+       "<link rel='stylesheet' type='text/css' href='/styles.css'>"
+       "</head><body>"
+       "<h1>Tictactoe</h1>"
+       "<form class='menu' action='/new-game' method='GET'>"
+       "<div>"
+       "<p>Player x</p>"
+       "<input type='radio' name='x' value='human' checked>Human"
+       "<input type='radio' name='x' value='computer'>Computer"
+       "</div>"
+       "<div>"
+       "<p>Player o</p>"
+       "<input type='radio' name='o' value='human' checked>Human"
+       "<input type='radio' name='o' value='computer'>Computer"
+       "</div>"
+       "<div>"
+       "<input type='submit' value='Start game'>"
+       "</div>"
+       "</form>"
        "</body></html>"))
