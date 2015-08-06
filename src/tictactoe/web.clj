@@ -34,12 +34,8 @@
 (defn- advance-game []
   (swap! running-game (fn [running-game] (next running-game))))
 
-(defn- set-space [space]
+(defn- user-wants-to-move-to [space]
   (swap! user-selected-space (fn [prev] space)))
-
-(defn- user-will-move-to [space]
-  (set-space space)
-  (advance-game))
 
 (defn- space-from [request]
   (Integer. (-> request :query-params (get "space"))))
@@ -49,34 +45,44 @@
     {:x (keyword (get params "x"))
      :o (keyword (get params "o"))}))
 
+(def routes {:menu "/"
+             :new-game "/new-game"
+             :user-move "/move"
+             :computer-move "/computer-move"
+             :board "/board"})
+
+(defn- respond-with-menu []
+  {:body (render-menu routes)})
+
 (defn- respond-with-game-view []
-  {:body (render-game (get-game))})
+  {:body (render-game routes (get-game))})
+
+(defn- menu [request]
+  (respond-with-menu))
+
+(defn- new-game [request]
+  (initialize-game-with (players-from request))
+  (redirect (:board routes)))
+
+(defn- move [request]
+  (user-wants-to-move-to (space-from request))
+  (advance-game)
+  (redirect (:board routes)))
+
+(defn- computer-move [request]
+  (advance-game)
+  (redirect (:board routes)))
 
 (defn- board [request]
   (respond-with-game-view))
 
-(defn- new-game [request]
-  (initialize-game-with (players-from request))
-  (redirect "/board"))
-
-(defn- move [request]
-  (user-will-move-to (space-from request))
-  (redirect "/board"))
-
-(defn- computer-move [request]
-  (advance-game)
-  (redirect "/board"))
-
-(defn- menu [request]
-  {:body (render-menu)})
-
-(defroutes routes
-           (GET "/" [] menu)
-           (GET "/new-game" [] new-game)
-           (GET "/move" [] move)
-           (GET "/computer-move" [] computer-move)
-           (GET "/board" [] board)
+(defroutes endpoints
+           (GET (:menu routes) [] menu)
+           (GET (:new-game routes) [] new-game)
+           (GET (:user-move routes) [] move)
+           (GET (:computer-move routes) [] computer-move)
+           (GET (:board routes) [] board)
            (resources "/")
            (not-found "Not found"))
 
-(def webapp (wrap-params routes))
+(def webapp (wrap-params endpoints))

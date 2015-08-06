@@ -1,28 +1,28 @@
 (ns tictactoe.html)
 
-(defn- render-mark [user-turn space mark]
+(defn- render-mark [routes user-turn space mark]
   (let [space-to-display (+ 1 space)]
     (if (not= :empty mark)
       (name mark)
       (if user-turn
-        (str "<a href='/move?space=" space "'>"
+        (str "<a href='" (:user-move routes) "?space=" space "'>"
              space-to-display
              "</a>")
         space-to-display))))
 
-(defn- render-space [user-turn space mark]
+(defn- render-space [routes user-turn space mark]
   (str "<div data-space='" (name mark) "'>"
-       (render-mark user-turn space mark)
+       (render-mark routes user-turn space mark)
        "</div>"))
 
 (defn- user-turn? [game]
   (and (not (:finished game))
        (:user-plays-next game)))
 
-(defn- render-spaces [game]
+(defn- render-spaces [routes game]
   (str "<div data-board>"
        (apply str
-         (map-indexed (partial render-space (user-turn? game)) (:board game)))
+         (map-indexed (partial render-space routes (user-turn? game)) (:board game)))
        "</div>"))
 
 (defn- render-outcome-message [winner]
@@ -30,42 +30,42 @@
     "It is a draw!"
     (str "The winner is " (name winner) "!")))
 
-(defn- render-outcome [game]
+(defn- render-outcome [routes game]
   (when (:finished game)
     (let [winner (:winner game)]
       (str "<div data-outcome='" (name winner) "'>"
            (render-outcome-message winner)
            "</div>"
-           "<a href='/'>Play again</a>"))))
+           "<a href='" (:menu routes) "'>Play again</a>"))))
 
 (defn- should-refresh? [game]
   (and (not (:finished game))
        (not (:user-plays-next game))))
 
-(defn- render-refresh [game]
+(defn- render-refresh [routes game]
   (when (should-refresh? game)
-    "<meta http-equiv='refresh' content='1; url=/computer-move'>"))
+    (str "<meta http-equiv='refresh' content='1; url=" (:computer-move routes) "'>")))
 
-(defn render-game [game]
+(defn render-game [routes game]
   (str "<!DOCTYPE html><html><head>"
        "<title>Tictactoe</title>"
        "<link rel='stylesheet' type='text/css' href='/styles.css'>"
-       (render-refresh game)
+       (render-refresh routes game)
        "</head><body>"
        "<h1>Tictactoe</h1>"
-       (render-spaces game)
+       (render-spaces routes game)
        "<div class='outcome'>"
-       (render-outcome game)
+       (render-outcome routes game)
        "</div>"
        "</body></html>"))
 
-(defn render-menu []
+(defn render-menu [routes]
   (str "<!DOCTYPE html><html><head>"
        "<title>Tictactoe</title>"
        "<link rel='stylesheet' type='text/css' href='/styles.css'>"
        "</head><body>"
        "<h1>Tictactoe</h1>"
-       "<form class='menu' action='/new-game' method='GET'>"
+       "<form class='menu' action='" (:new-game routes) "' method='GET'>"
        "<div>"
        "<p>Player x</p>"
        "<input type='radio' name='x' value='human' checked>Human"
