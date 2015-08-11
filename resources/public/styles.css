@@ -7,7 +7,7 @@ h1, p {
   text-align: center;
 }
 
-body, .board {
+body, .board, .menu div, .menu p, div.outcome * {
   margin: auto;
   display: table;
 }
@@ -22,9 +22,4 @@ body, .board {
   min-width: 33%;
   float: left;
   text-align: center;
-}
-
-.menu div, .menu p, div.outcome * {
-  margin: auto;
-  display: table;
 }

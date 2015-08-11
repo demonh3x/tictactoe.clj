@@ -6,7 +6,8 @@
   :dependencies [[org.clojure/clojure "1.7.0-RC2"]]
   :profiles {:cli {:main  tictactoe.cli_main}
              :web {:dependencies [[ring "1.4.0"]
-                                  [compojure "1.4.0"]]
+                                  [compojure "1.4.0"]
+                                  [enlive "1.1.6"]]
                    :main tictactoe.web_main}
              :dev {:dependencies [[speclj "3.3.1"]
                                   [compojure "1.4.0"]

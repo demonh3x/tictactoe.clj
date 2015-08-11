@@ -1,83 +1,71 @@
-(ns tictactoe.html)
+(ns tictactoe.html
+  (:require [net.cgrand.enlive-html :as html]))
 
-(defn- render-mark [routes user-turn space mark]
-  (let [space-to-display (+ 1 space)]
-    (if (not= :empty mark)
-      (name mark)
-      (if user-turn
-        (str "<a href='" (:user-move routes) "?space=" space "'>"
-             space-to-display
-             "</a>")
-        space-to-display))))
+(html/defsnippet space-model "public/game.html"
+                 [[(html/attr? :data-space) (html/nth-of-type 1)]]
+                 [move-url user-turn space mark]
 
-(defn- render-space [routes user-turn space mark]
-  (str "<div class='space' data-space='" (name mark) "'>"
-       (render-mark routes user-turn space mark)
-       "</div>"))
+                 [:a] (html/do->
+                        (html/set-attr :href (str move-url "?space=" space))
+                        (html/content (str (+ 1 space))))
+                 [(html/attr? :data-space)] (html/do->
+                                              (html/set-attr :data-space (name mark))
+                                              (if-not user-turn
+                                                (html/content (str (+ 1 space)))
+                                                identity)
+                                              (if (not= :empty mark)
+                                                (html/content (name mark))
+                                                identity)))
+
+(defn- outcome-message [winner]
+  (if (= :none winner)
+    "It is a draw!"
+    (str "The winner is " (name winner) "!")))
+
+(html/defsnippet outcome-model "public/game.html"
+                 [(html/attr? :data-outcome) (html/nth-of-type 1)]
+                 [menu-url winner]
+
+                 [:a] (html/set-attr :href menu-url)
+                 [(html/attr? :data-outcome-message)] (html/content (outcome-message winner))
+                 [(html/attr? :data-outcome)] (html/set-attr :data-outcome (name winner)))
 
 (defn- user-turn? [game]
   (and (not (:finished game))
        (:user-plays-next game)))
 
-(defn- render-spaces [routes game]
-  (str "<div class='board' data-board>"
-       (apply str
-         (map-indexed (partial render-space routes (user-turn? game)) (:board game)))
-       "</div>"))
-
-(defn- render-outcome-message [winner]
-  (if (= :none winner)
-    "It is a draw!"
-    (str "The winner is " (name winner) "!")))
-
-(defn- render-outcome [routes game]
-  (when (:finished game)
-    (let [winner (:winner game)]
-      (str "<div data-outcome='" (name winner) "'>"
-           (render-outcome-message winner)
-           "</div>"
-           "<a href='" (:menu routes) "'>Play again</a>"))))
-
 (defn- should-refresh? [game]
   (and (not (:finished game))
        (not (:user-plays-next game))))
 
-(defn- render-refresh [routes game]
-  (when (should-refresh? game)
-    (str "<meta http-equiv='refresh' content='1; url=" (:computer-move routes) "'>")))
+(defn- refresh-tag [url]
+  {:tag   :meta
+   :attrs {:http-equiv "refresh"
+           :content (str "1; url=" url)}})
+
+(html/deftemplate game-template "public/game.html"
+                  [routes game]
+                  [:head] (html/append
+                            (when (should-refresh? game)
+                              (refresh-tag (:computer-move routes))))
+                  [(html/attr? :data-board)] (html/content
+                                               (let [model (partial space-model
+                                                                    (:user-move routes)
+                                                                    (user-turn? game))]
+                                                 (map-indexed model (:board game))))
+                  [(html/attr? :data-outcome)] (html/content
+                                                 (when (:finished game)
+                                                   (outcome-model (:menu routes) (:winner game)))))
+
+(html/deftemplate menu-template "public/menu.html"
+                  [{:keys [:new-game]}]
+                  [(html/attr= :data-menu)] (html/set-attr :action new-game))
+
+(defn- render [template & args]
+  (apply str (apply template args)))
 
 (defn render-game [routes game]
-  (str "<!DOCTYPE html><html><head>"
-       "<title>Tictactoe</title>"
-       "<link rel='stylesheet' type='text/css' href='/styles.css'>"
-       (render-refresh routes game)
-       "</head><body>"
-       "<h1>Tictactoe</h1>"
-       (render-spaces routes game)
-       "<div class='outcome'>"
-       (render-outcome routes game)
-       "</div>"
-       "</body></html>"))
+  (render game-template routes game))
 
 (defn render-menu [routes]
-  (str "<!DOCTYPE html><html><head>"
-       "<title>Tictactoe</title>"
-       "<link rel='stylesheet' type='text/css' href='/styles.css'>"
-       "</head><body>"
-       "<h1>Tictactoe</h1>"
-       "<form class='menu' action='" (:new-game routes) "' method='GET'>"
-       "<div>"
-       "<p>Player x</p>"
-       "<input type='radio' name='x' value='human' checked>Human"
-       "<input type='radio' name='x' value='computer'>Computer"
-       "</div>"
-       "<div>"
-       "<p>Player o</p>"
-       "<input type='radio' name='o' value='human' checked>Human"
-       "<input type='radio' name='o' value='computer'>Computer"
-       "</div>"
-       "<div>"
-       "<input type='submit' value='Start game'>"
-       "</div>"
-       "</form>"
-       "</body></html>"))
+  (render menu-template routes))

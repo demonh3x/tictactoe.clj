@@ -6,9 +6,10 @@
 
 (def routes {:user-move "/move"
              :computer-move "/computer-move"
-             :menu "/menu"})
+             :menu "/menu"
+             :new-game "/new-game"})
 
-(def render #(render-game routes %))
+(def render-game-with-routes #(render-game routes %))
 
 (describe "render-game"
           (it "renders links for the empty spaces when the user plays next"
@@ -23,8 +24,9 @@
                                     :empty :empty :empty
                                     :empty :empty :empty]
                             :user-plays-next true
-                            :finished false}
-                           render
+                            :finished false
+                            :winner :none}
+                           render-game-with-routes
                            find-links)))
 
           (it "renders no links when the user does not play next"
@@ -33,8 +35,9 @@
                                     :empty :empty :empty
                                     :empty :empty :empty]
                             :user-plays-next false
-                            :finished false}
-                           render
+                            :finished false
+                            :winner :none}
+                           render-game-with-routes
                            find-links)))
 
           (it "sets an automatic refresh to the computer move when the user does not play next"
@@ -43,8 +46,9 @@
                                     :empty :empty :empty
                                     :empty :empty :empty]
                             :user-plays-next false
-                            :finished false}
-                           render
+                            :finished false
+                            :winner :none}
+                           render-game-with-routes
                            find-refresh-url)))
 
           (it "renders only a link to the menu when it is finished"
@@ -55,7 +59,7 @@
                             :user-plays-next true
                             :finished true
                             :winner :x}
-                           render
+                           render-game-with-routes
                            find-links)))
 
           (it "does not set an automatic refresh when it is finished"
@@ -66,25 +70,33 @@
                             :user-plays-next false
                             :finished true
                             :winner :x}
-                           render
+                           render-game-with-routes
                            find-refresh-url)))
 
           (it "renders the outcome when it is finished"
-              (should-contain "<div data-outcome='x'>The winner is x!</div>"
+              (should-contain "The winner is x!"
                               (-> {:board [:x     :x     :x
                                            :o     :o     :empty
                                            :empty :empty :empty]
                                    :finished true
                                    :winner :x}
-                                  render)))
+                                  render-game-with-routes)))
 
           (it "renders a draw outcome"
-              (should-contain "<div data-outcome='none'>It is a draw!</div>"
+              (should-contain "It is a draw!"
                               (-> {:board [:x     :x     :o
                                            :o     :o     :x
                                            :x     :x     :o]
                                    :finished true
                                    :winner :none}
-                                  render))))
+                                  render-game-with-routes))))
+
+(describe "render-menu"
+          (it "the form's action sends to a new game"
+              (should= ["/new-game"]
+                       (->> routes
+                            render-menu
+                            (find-in-html [:form])
+                            (map #(get-in % [:attrs :action]))))))
 
 (run-specs)
