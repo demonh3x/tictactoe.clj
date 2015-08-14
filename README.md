@@ -26,10 +26,10 @@ This is an implementation of the tic-tac-toe game (or Noughts and crosses, Xs an
 * Clojure 1.7
 * Ring
 * Compojure
+* Enlive
 
 ##### Testing
 * [Speclj][speclj] 3.3.1
-* Enlive
 
 [speclj]: https://github.com/slagyr/speclj
 
